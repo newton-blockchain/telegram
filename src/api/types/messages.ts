@@ -356,7 +356,8 @@ export interface ApiAction {
   | 'joinedChannel'
   | 'chatBoost'
   | 'receipt'
-  | 'other';
+  | 'other'
+  | 'tonAddressRequest' | 'tonAddressResponse';
   photo?: ApiPhoto;
   amount?: number;
   currency?: string;

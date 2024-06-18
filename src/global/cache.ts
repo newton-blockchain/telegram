@@ -227,6 +227,10 @@ function unsafeMigrateCache(cached: GlobalState, initialState: GlobalState) {
   if (!cached.quickReplies) {
     cached.quickReplies = initialState.quickReplies;
   }
+
+  if (!cached.ton) {
+    cached.ton = { byChatId: {} };
+  }
 }
 
 function updateCache(force?: boolean) {
@@ -286,6 +290,7 @@ export function serializeGlobal<T extends GlobalState>(global: T) {
       'peerColors',
       'savedReactionTags',
       'timezones',
+      'ton',
     ]),
     lastIsChatInfoShown: !getIsMobile() ? global.lastIsChatInfoShown : undefined,
     customEmojis: reduceCustomEmojis(global),

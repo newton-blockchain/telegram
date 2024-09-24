@@ -251,6 +251,9 @@ function unsafeMigrateCache(cached: GlobalState, initialState: GlobalState) {
   if (!cached.chats.topicsInfoById) {
     cached.chats.topicsInfoById = initialState.chats.topicsInfoById;
   }
+  if (!cached.ton) {
+    cached.ton = { byChatId: {} };
+  }
 }
 
 function updateCache(force?: boolean) {
@@ -312,6 +315,7 @@ function reduceGlobal<T extends GlobalState>(global: T) {
       'savedReactionTags',
       'timezones',
       'availableEffectById',
+      'ton',
     ]),
     lastIsChatInfoShown: !getIsMobile() ? global.lastIsChatInfoShown : undefined,
     customEmojis: reduceCustomEmojis(global),

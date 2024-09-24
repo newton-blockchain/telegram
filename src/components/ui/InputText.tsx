@@ -58,7 +58,7 @@ const InputText: FC<OwnProps> = ({
   const lang = useOldLang();
   const labelText = error || success || label;
   const fullClassName = buildClassName(
-    'input-group',
+    'InputText input-group',
     value && 'touched',
     error ? 'error' : success && 'success',
     disabled && 'disabled',

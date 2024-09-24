@@ -423,7 +423,8 @@ export interface ApiAction {
   | 'giftPremium'
   | 'giftCode'
   | 'prizeStars'
-  | 'other';
+  | 'other'
+  | 'tonAddressRequest' | 'tonAddressResponse';
   photo?: ApiPhoto;
   amount?: number;
   stars?: number;

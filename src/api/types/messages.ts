@@ -487,7 +487,8 @@ export interface ApiAction {
   | 'giftCode'
   | 'prizeStars'
   | 'starGift'
-  | 'other';
+  | 'other'
+  | 'tonAddressRequest' | 'tonAddressResponse';
   photo?: ApiPhoto;
   amount?: number;
   stars?: number;

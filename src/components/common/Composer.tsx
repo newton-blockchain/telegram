@@ -157,6 +157,7 @@ import PollModal from '../middle/composer/PollModal.async';
 import SendAsMenu from '../middle/composer/SendAsMenu.async';
 import StickerTooltip from '../middle/composer/StickerTooltip.async';
 import SymbolMenuButton from '../middle/composer/SymbolMenuButton';
+import TonModal from '../middle/composer/TonModal.async';
 import WebPagePreview from '../middle/composer/WebPagePreview';
 import MessageEffect from '../middle/message/MessageEffect';
 import ReactionSelector from '../middle/message/reactions/ReactionSelector';
@@ -451,6 +452,8 @@ const Composer: FC<OwnProps & StateProps> = ({
   useTimeout(() => {
     setIsMounted(true);
   }, MOUNT_ANIMATION_DURATION);
+
+  const [isTonModalOpen, openTonModal, closeTonModal] = useFlag();
 
   useEffect(() => {
     if (isInMessageList) return;
@@ -1663,6 +1666,11 @@ const Composer: FC<OwnProps & StateProps> = ({
         onClear={closePollModal}
         onSend={handlePollSend}
       />
+      <TonModal
+        isOpen={isTonModalOpen}
+        chatId={chatId}
+        onClear={closeTonModal}
+      />
       <SendAsMenu
         isOpen={isSendAsMenuOpen}
         onClose={closeSendAsMenu}
@@ -1908,6 +1916,8 @@ const Composer: FC<OwnProps & StateProps> = ({
               theme={theme}
               onMenuOpen={onAttachMenuOpen}
               onMenuClose={onAttachMenuClose}
+              canSendTons={!isChatWithSelf && isUserId(chatId)}
+              onSendTons={openTonModal}
             />
           )}
           {isInMessageList && Boolean(botKeyboardMessageId) && (

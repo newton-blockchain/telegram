@@ -1,0 +1,83 @@
+.TonModal {
+  .modal-dialog {
+    max-width: 28rem;
+
+    @media (max-width: 600px) {
+      max-height: 100%;
+      padding-bottom: 1.5rem;
+    }
+  }
+
+  .address {
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .ChatInfo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .Avatar {
+      margin-bottom: 0.5rem;
+    }
+
+    h3 {
+      margin: 0;
+      text-align: center;
+    }
+
+    .pictogram {
+      margin: 0.5rem 0;
+      width: 6rem;
+      height: 6rem;
+
+      .ton-pictogram {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    code {
+      font-size: 0.875rem;
+      color: var(--color-code);
+      background: var(--color-code-bg);
+      white-space: pre-wrap;
+      margin: 0;
+      padding: 1px 2px;
+      border-radius: 4px;
+    }
+  }
+
+  .send-form {
+    .InputText {
+      margin: 0;
+    }
+  }
+
+  .note {
+    margin-top: 0.5rem;
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+
+    &.big {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 4rem 0 5rem 0;
+    }
+
+    &.left {
+      text-align: left;
+    }
+
+    .Spinner {
+      margin-bottom: 1rem;
+    }
+  }
+}

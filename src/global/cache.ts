@@ -265,6 +265,10 @@ function unsafeMigrateCache(cached: GlobalState, initialState: GlobalState) {
     cached.stickers.starGifts = initialState.stickers.starGifts;
     cached.users.giftsById = initialState.users.giftsById;
   }
+
+  if (!cached.ton) {
+    cached.ton = { byChatId: {} };
+  }
 }
 
 function updateCache(force?: boolean) {
@@ -327,6 +331,7 @@ function reduceGlobal<T extends GlobalState>(global: T) {
       'savedReactionTags',
       'timezones',
       'availableEffectById',
+      'ton',
     ]),
     lastIsChatInfoShown: !getIsMobile() ? global.lastIsChatInfoShown : undefined,
     customEmojis: reduceCustomEmojis(global),

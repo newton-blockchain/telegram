@@ -416,3 +416,11 @@ body:not(.is-ios) {
   --color-forum-hover-unread-topic-hover: rgb(63, 63, 63);
   --color-chat-username: rgb(233, 238, 244);
 }
+
+.icon-custom-image {
+  width: 1.5rem;
+  height: 1.25rem;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+}

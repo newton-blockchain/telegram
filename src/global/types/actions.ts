@@ -2421,6 +2421,17 @@ export interface ActionPayloads {
     file?: File;
     isSuggest?: boolean;
   } & WithTabId;
+
+  // TON
+  requestTonAddress: WithTabId | undefined;
+  shareTonAddress: {
+    requesterId: string;
+    requestedAt: number;
+  } & WithTabId;
+  saveTonAddress: {
+    chatId: string;
+    address: string;
+  };
 }
 
 export interface RequiredActionPayloads {

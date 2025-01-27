@@ -382,7 +382,8 @@ export interface ApiAction {
   | 'prizeStars'
   | 'starGift'
   | 'starGiftUnique'
-  | 'other';
+  | 'other'
+  | 'tonAddressRequest' | 'tonAddressResponse';
   photo?: ApiPhoto;
   amount?: number;
   stars?: number;

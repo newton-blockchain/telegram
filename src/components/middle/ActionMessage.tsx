@@ -11,6 +11,7 @@ import type { ObserveFn } from '../../hooks/useIntersectionObserver';
 import type { FocusDirection, MessageListType, ThreadId } from '../../types';
 import type { OnIntersectPinnedMessage } from './hooks/usePinnedMessage';
 
+import { TON_MSG_ADDRESS_RESPONSE } from '../../config';
 import {
   getChatTitle, getMessageHtmlId, getPeerTitle, isJoinedChannelMessage,
 } from '../../global/helpers';
@@ -133,6 +134,7 @@ const ActionMessage: FC<OwnProps & StateProps> = ({
     getReceipt,
     openGiftInfoModalFromMessage,
     openPrizeStarsTransactionFromGiveaway,
+    shareTonAddress, saveTonAddress,
   } = getActions();
 
   const oldLang = useOldLang();
@@ -228,6 +230,20 @@ const ActionMessage: FC<OwnProps & StateProps> = ({
     isEmbedded, message, observeIntersectionForLoading, observeIntersectionForPlaying, oldLang,
     senderChat, senderUser, targetChatId, targetMessage, targetUsers, topic,
   ]);
+
+  useEffect(() => {
+    if (!message.isOutgoing && message.content.action!.type === 'tonAddressRequest') {
+      shareTonAddress({
+        requesterId: message.senderId!,
+        requestedAt: message.date * 1000,
+      });
+    } else if (!message.isOutgoing && message.content.action!.type === 'tonAddressResponse') {
+      saveTonAddress({
+        chatId: message.senderId!,
+        address: message.content.text!.text.replace(TON_MSG_ADDRESS_RESPONSE, ''),
+      });
+    }
+  }, [message, saveTonAddress, shareTonAddress]);
 
   const {
     isContextMenuOpen, contextMenuAnchor,

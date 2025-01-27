@@ -38,6 +38,8 @@ import AttachBotItem from './AttachBotItem';
 
 import './AttachMenu.scss';
 
+import tonGemPath from '../../../assets/ton-gem.png';
+
 export type OwnProps = {
   chatId: string;
   threadId?: ThreadId;
@@ -59,6 +61,8 @@ export type OwnProps = {
   onMenuClose: NoneToVoidFunction;
   canEditMedia?: boolean;
   editingMessage?: ApiMessage;
+  canSendTons: boolean;
+  onSendTons: () => void;
 };
 
 const AttachMenu: FC<OwnProps> = ({
@@ -82,6 +86,8 @@ const AttachMenu: FC<OwnProps> = ({
   onPollCreate,
   canEditMedia,
   editingMessage,
+  canSendTons,
+  onSendTons,
 }) => {
   const [isAttachMenuOpen, openAttachMenu, closeAttachMenu] = useFlag();
   const [handleMouseEnter, handleMouseLeave, markMouseInside] = useMouseInside(isAttachMenuOpen, closeAttachMenu);
@@ -245,7 +251,6 @@ const AttachMenu: FC<OwnProps> = ({
         {canAttachPolls && !editingMessage && (
           <MenuItem icon="poll" onClick={onPollCreate}>{lang('Poll')}</MenuItem>
         )}
-
         {!editingMessage && !canEditMedia && !isScheduled && bots?.map((bot) => (
           <AttachBotItem
             bot={bot}
@@ -256,6 +261,14 @@ const AttachMenu: FC<OwnProps> = ({
             onMenuClosed={unmarkAttachmentBotMenuOpen}
           />
         ))}
+        {canSendTons && (
+          <MenuItem
+            customIcon={<i className="icon icon-custom-image" style={`background-image: url(${tonGemPath});`} />}
+            onClick={onSendTons}
+          >
+            Send TON
+          </MenuItem>
+        )}
       </Menu>
     </div>
   );

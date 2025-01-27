@@ -54,7 +54,13 @@ const CSP = `
 
 export default function createConfig(
   _: any,
-  { mode = 'production' }: { mode: 'none' | 'development' | 'production' },
+  {
+    mode = 'production',
+    'output-path': outputPath,
+  }: {
+    mode: 'none' | 'development' | 'production';
+    ['output-path']: string;
+  },
 ): Configuration {
   return {
     mode,
@@ -101,7 +107,7 @@ export default function createConfig(
       filename: '[name].[contenthash].js',
       chunkFilename: '[id].[chunkhash].js',
       assetModuleFilename: '[name].[contenthash][ext]',
-      path: path.resolve(__dirname, 'dist'),
+      path: path.resolve(__dirname, outputPath || 'dist'),
       clean: true,
     },
 

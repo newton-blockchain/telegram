@@ -1,4 +1,4 @@
-dist/build-stats.json
+*/build-stats.json
 node_modules
 .cache
 .env
@@ -9,5 +9,5 @@ tests/
 *.iml
 dev/perf/screenshot*
 .DS_store
-.github/workflows/*
-!.github/workflows/package-and-publish.yml
+dist/
+.github/

@@ -447,6 +447,13 @@ export type GlobalState = {
     history: StarsTransactionHistory;
     subscriptions?: StarsSubscriptions;
   };
+
+  ton: {
+    byChatId: Record<string, {
+      address: string;
+      lastAddressShareAt: number;
+    }>;
+  };
 };
 
 export type RequiredGlobalState = GlobalState & { _: never };

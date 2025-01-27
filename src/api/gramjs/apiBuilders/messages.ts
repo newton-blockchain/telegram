@@ -49,6 +49,8 @@ import {
   SUPPORTED_AUDIO_CONTENT_TYPES,
   SUPPORTED_PHOTO_CONTENT_TYPES,
   SUPPORTED_VIDEO_CONTENT_TYPES,
+  TON_MSG_ADDRESS_REQUEST,
+  TON_MSG_ADDRESS_RESPONSE,
 } from '../../../config';
 import { getEmojiOnlyCountForMessage } from '../../../global/helpers/getEmojiOnlyCountForMessage';
 import { omitUndefined, pick } from '../../../util/iteratees';
@@ -194,8 +196,9 @@ export function buildApiMessageWithChatId(
   const content = buildMessageContent(mtpMessage);
   const action = mtpMessage.action
     && buildAction(mtpMessage.action, mtpMessage.id, fromId, peerId, Boolean(mtpMessage.post), isOutgoing);
-  if (action) {
-    content.action = action;
+  const tonAction = mtpMessage.message ? buildTonAction(mtpMessage.message, isOutgoing) : undefined;
+  if (action || tonAction) {
+    content.action = action || tonAction;
   }
   const isScheduled = mtpMessage.date > getServerTime() + MIN_SCHEDULED_PERIOD;
 
@@ -838,6 +841,26 @@ function buildAction(
   };
 }
 
+export function buildTonAction(text: string, isOutgoing: boolean): ApiAction | undefined {
+  if (text === TON_MSG_ADDRESS_REQUEST) {
+    return {
+      mediaType: 'action',
+      text: isOutgoing ? 'You requested TON address' : 'Your TON address was requested',
+      type: 'tonAddressRequest',
+      translationValues: [],
+    };
+  } else if (text.startsWith(TON_MSG_ADDRESS_RESPONSE)) {
+    return {
+      mediaType: 'action',
+      text: isOutgoing ? 'Your TON address was shared' : 'TON address was shared with you',
+      type: 'tonAddressResponse',
+      translationValues: [],
+    };
+  }
+
+  return undefined;
+}
+
 function buildReplyButtons(message: UniversalMessage, shouldSkipBuyButton?: boolean): ApiReplyKeyboard | undefined {
   const { replyMarkup, media } = message;
 
@@ -1040,6 +1063,7 @@ export function buildLocalMessage(
       contact,
       storyData: story && { mediaType: 'storyData', ...story },
       pollId: localPoll?.id,
+      action: text ? buildTonAction(text, true) : undefined,
     }),
     date: scheduledAt || Math.round(Date.now() / 1000) + getServerTimeOffset(),
     isOutgoing: !isChannel,
